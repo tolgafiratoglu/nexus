@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -13,6 +14,11 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+
+import java.io.InputStream;
 
 @Service
 public class BucketService {
@@ -51,8 +57,9 @@ public class BucketService {
         return s3Client.createBucket(bucketName);
     }    
 
-    protected Bucket upload(String bucketName) {
-        return s3Client.createBucket(bucketName);
+    protected PutObjectResult upload(String bucketName, InputStream inputStream, String fileName, ObjectMetadata metadata) {
+        PutObjectRequest request = new PutObjectRequest(bucketName, fileName, inputStream, metadata);
+        return s3Client.putObject(request);
     }
 
     protected Boolean bucketExists(String bucketName) {

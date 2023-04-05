@@ -30,4 +30,45 @@ $( document ).ready(function($) {
         }
     );
 
+    var files = [];
+
+    $(document)
+        .on(
+            "change",
+            "#file_loader",
+            function(event) {
+                files=event.target.files;
+            });
+
+    $("#new_bucket_object").click(
+        function (event) {
+            event.preventDefault();
+
+            var bucketName = $("#bucket_name").find(":selected").val();
+
+            clickedButton = $(this);
+            clickedButton.addClass("disabled");
+
+            var uploadForm = new FormData();
+            uploadForm.append("file", files[0]);
+
+            $.ajax({
+                    dataType : 'json',
+                    url : "/bucket/upload/" + bucketName,
+                    data : uploadForm,
+                    type : "PUT",
+                    enctype: 'multipart/form-data',
+                    processData: false, 
+                    contentType:false,
+                    success : function(result) {
+                        //...;
+                    },
+                    error : function(result){
+                        //...;
+                    }
+                });
+
+        }    
+    );
+
 });
