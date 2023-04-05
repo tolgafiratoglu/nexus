@@ -1,0 +1,23 @@
+.content-wrapper{
+    max-width: 1000px;
+    margin-top: 2rem;
+}
+
+.sidebar-list{
+    list-style: none;
+    line-height: 2.2em;
+    background-color: #f5f5f5;
+    padding: 2rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 1rem;
+}
+
+.sidebar-list .list-header{
+    font-weight: bold;
+}
+
+.sidebar-list a{
+    color: #020202 !important;
+    text-transform: uppercase;
+    padding-left: 1rem;
+}    

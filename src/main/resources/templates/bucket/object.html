@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+  <title>S3 / New Bucket</title>
+</head>
+<body>
+    <section layout:fragment="content">
+        <div class="alert alert-danger collapse" role="alert"></div>
+        <div class="alert alert-success collapse" role="alert"></div>
+        <form class="new-bucket-form">
+            <div class="form-group">
+                <label for="bucketName">Bucket Name</label>
+                <select>
+                    <option th:each="bucket : ${buckets}" th:value="${bucket.name}" th:text="${bucket.name}"></option>
+                </select>
+                <small id="bucket_name" class="form-text text-muted">Please write a lowercase letter or number</small>
+            </div>
+            <button type="submit" id="new_bucket_button" class="btn btn-primary">Save Bucket</button>
+        </form>
+    </section>
+</body>
+</html>
