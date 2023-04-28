@@ -1,0 +1,4 @@
+app:
+    db:
+        username: root
+        password: root
