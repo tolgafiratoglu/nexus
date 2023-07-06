@@ -15,8 +15,11 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.CreateTableResult;
+import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
 import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
 import com.amazonaws.services.sns.model.Topic;
+import com.amazonaws.waiters.Waiter;
+import com.amazonaws.waiters.WaiterParameters;
 
 import java.io.InputStream;
 
@@ -61,7 +64,8 @@ public class DynamoService {
         CreateTableResult createResult = dynamoDbClient.createTable(createRequest);
 
         // Wait for the table to be created
-        dynamoDbClient.waiters().tableExists().run(() -> new DescribeTableRequest(tableName));
+        Waiter<DescribeTableRequest> waiter = dynamoDbClient.waiters().tableExists();
+        waiter.run(new WaiterParameters<>(new DescribeTableRequest(tableName)));
 
         // Get the newly created table
         return dynamoDB.getTable(tableName);

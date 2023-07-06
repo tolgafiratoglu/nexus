@@ -30,7 +30,6 @@ public class BucketController {
     @GetMapping("/new")
     public ModelAndView newBucket() {
         ModelAndView mav = new ModelAndView("bucket/new");
-        mav.addObject("buckets", "test");
         return mav;
     }
 

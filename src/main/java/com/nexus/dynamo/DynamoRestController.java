@@ -35,7 +35,4 @@ public class DynamoRestController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad request while creating the bucket", exception);
         }    
     }
-
-        
-
 }

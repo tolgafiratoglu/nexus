@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/bucket")
+@RequestMapping("/dynamo")
 @ResponseBody
 public class DynamoController {
 
@@ -20,16 +20,16 @@ public class DynamoController {
     @GetMapping("/list")
     public ModelAndView list() {
        
-        List<DynamoDTO> buckets = bucketService.getList();
+        List<DynamoDTO> tables = bucketService.getList();
 
-        ModelAndView mav = new ModelAndView("bucket/list");
-        mav.addObject("buckets", buckets);
+        ModelAndView mav = new ModelAndView("dynamo/list");
+        mav.addObject("tables", tables);
         return mav;
     }
     
     @GetMapping("/new")
     public ModelAndView newBucket() {
-        ModelAndView mav = new ModelAndView("bucket/new");
+        ModelAndView mav = new ModelAndView("dynamo/new");
         mav.addObject("buckets", "test");
         return mav;
     }

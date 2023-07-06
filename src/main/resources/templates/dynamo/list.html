@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+  <title>S3 / Table List</title>
+</head>
+<body>
+    <section layout:fragment="content">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Table Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="bucket : ${tables}">
+            <td><span th:text="${bucket.name}"></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+</body>
+</html>
