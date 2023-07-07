@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+  <title>S3 / List Metrics</title>
+</head>
+<body>
+    <section layout:fragment="content">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Dimension</th>
+            <th scope="col">Metric</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="metric : ${metrics}">
+            <td><span th:text="${metric.getNamespace()}"></span></td>
+            <td><span th:text="${metric.getName()}"></span></td>
+            <td><span style="display: block;" th:each="dimension : ${metric.getDimensions()}" th:text="${dimension.Name + ': ' + dimension.Value }"></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+</body>
+</html>
