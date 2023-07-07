@@ -30,7 +30,6 @@ public class DynamoController {
     @GetMapping("/new")
     public ModelAndView newBucket() {
         ModelAndView mav = new ModelAndView("dynamo/new");
-        mav.addObject("buckets", "test");
         return mav;
     }
 

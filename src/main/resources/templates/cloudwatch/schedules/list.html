@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+  <title>S3 / List Schedules</title>
+</head>
+<body>
+    <section layout:fragment="content">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Schedule Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="schedule : ${schedules}">
+            <td><span th:text="${schedule.email}"></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+</body>
+</html>
