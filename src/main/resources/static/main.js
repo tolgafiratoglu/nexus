@@ -11,6 +11,7 @@ $( document ).ready(function($) {
 
             if(bucketName === "") {
                 $(".alert-danger").html("Bucket name shouldn't be blank").show().delay(2000).fadeOut('slow');
+                clickedButton.removeClass("disabled");
             } else {
                 var jqxhr = $.ajax( {
                     "method": "PUT", 
@@ -27,6 +28,38 @@ $( document ).ready(function($) {
                     });
 
             }        
+        }
+    );
+
+    $("#new_table_button").click(
+        function(event){
+            event.preventDefault();
+            
+            var tableName = $("#table_name").val();
+
+            clickedButton = $(this);
+            clickedButton.addClass("disabled");
+
+            if(tableName === "") {
+                $(".alert-danger").html("Table name shouldn't be blank").show().delay(2000).fadeOut('slow');
+                clickedButton.removeClass("disabled");
+            } else {
+                var jqxhr = $.ajax( {
+                    "method": "PUT", 
+                    "url": "/dynamo/table/create",
+                    "data": JSON.stringify({"name": tableName}),
+                    "contentType": "application/json"
+                } )
+                    .done(function() {
+                        document.location = "/dynamo/list";
+                    })
+                    .fail(function(xhr, status, error) {
+                        $(".alert-danger").html(xhr.responseText).show().delay(2000).fadeOut('slow');
+                        clickedButton.removeClass("disabled");
+                    });
+
+            }
+
         }
     );
 

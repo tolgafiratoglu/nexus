@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,13 +26,13 @@ public class DynamoRestController {
         return ResponseEntity.status(responseEx.getStatusCode()).body(message);
     }
 
-    @PostMapping("/table/create")
+    @PutMapping("/table/create")
     public ResponseEntity create(@Valid @RequestBody DynamoRequest dynamoRequest) {
         try {
             dynamoService.create(dynamoRequest.getName());
             return ResponseEntity.ok().body("Bucket was created");
         } catch (Exception exception) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad request while creating the bucket", exception);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, dynamoRequest.getName() + exception.getMessage(), exception);
         }    
     }
 }
