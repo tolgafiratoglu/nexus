@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+  <title>S3 / New Report</title>
+</head>
+<body>
+    <section layout:fragment="content">
+        <div class="alert alert-danger collapse" role="alert"></div>
+        <div class="alert alert-success collapse" role="alert"></div>
+        <form class="new-report-form">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="usage" name="report_option" value="usage" checked>
+                <label class="form-check-label" for="usage">AWS/Usage</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="s3" name="report_option" value="s3">
+                <label class="form-check-label" for="s3">AWS/S3</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="dynamodb" name="report_option" value="dynamodb">
+                <label class="form-check-label" for="dynamodb">AWS/DynamoDB</label>
+            </div>
+            <div class="form-group collapse s3-related">
+                <label for="bucketName">Buckets</label>
+                <select id="bucket_list" class="form-control" multiple>
+                    <option th:each="bucket : ${buckets}" th:value="${bucket.name}" th:text="${bucket.name}"></option>
+                </select>
+                <small class="form-text text-muted">Please select the buckets.</small>
+            </div>
+            <div class="form-group collapse dynamodb-related">
+                <label for="tableName">Tables</label>
+                <select id="table_list" class="form-control" multiple>
+                    <option th:each="table : ${tables}" th:value="${table.name}" th:text="${table.name}"></option>
+                </select>
+                <small class="form-text text-muted">Please select the tables.</small>
+            </div>
+            <div class="form-group usage-related">
+                <label for="services">Services</label>
+                <select id="services" class="form-control">
+                    <option th:each="serviceName : ${services}" th:value="${serviceName}" th:text="${serviceName}"></option>
+                </select>
+                <small class="form-text text-muted">Please select the service</small>
+            </div>
+            <div class="form-group usage-related">
+                <label for="usageMetrics">Usage Metrics</label>
+                <select id="usage_metric" class="form-control">
+                    <option th:each="metric : ${usageMetrics}" th:value="${metric}" th:text="${metric}"></option>
+                </select>
+                <small class="form-text text-muted">Please select the metric</small>
+            </div>
+            <div class="form-group collapse s3-related">
+                <label for="s3Metrics">S3 Metrics</label>
+                <select id="s3_metric" class="form-control">
+                    <option th:each="metric : ${s3Metrics}" th:value="${metric}" th:text="${metric}"></option>
+                </select>
+                <small class="form-text text-muted">Please select the metric</small>
+            </div>
+            <div class="form-group collapse dynamodb-related">
+                <label for="dynamoMetrics">Dynamo Metrics</label>
+                <select id="dynamo_metric" class="form-control">
+                    <option th:each="metric : ${dynamoMetrics}" th:value="${metric}" th:text="${metric}"></option>
+                </select>
+                <small class="form-text text-muted">Please select the metric</small>
+            </div>
+            <button type="submit" id="save_report" class="btn btn-primary">Create Dashboard Chart</button>
+        </form>
+    </section>
+</body>
+</html>

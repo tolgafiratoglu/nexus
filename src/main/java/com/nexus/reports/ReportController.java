@@ -16,7 +16,7 @@ import com.nexus.dynamo.DynamoDTO;
 import com.nexus.dynamo.DynamoService;
 
 @Controller
-@RequestMapping("/dynamo")
+@RequestMapping("/reports")
 @ResponseBody
 public class ReportController {
     
@@ -30,17 +30,20 @@ public class ReportController {
     List<String> s3Metrics = Arrays.asList("NumberOfObjects", "BucketSizeBytes");
     List<String> dynamoMetrics = Arrays.asList("ConsumedReadCapacityUnits", "ConsumedWriteCapacityUnits", "ProvisionedReadCapacityUnits", "AccountMaxTableLevelWrites", "AccountMaxWrites", "AccountProvisionedReadCapacityUtilization");
 
+    List<String> services = Arrays.asList("S3", "Cloudwatch", "DynamoDB");
+
     @GetMapping("/new")
-    public ModelAndView newReport(){
+    public ModelAndView newReport() {
         List<DynamoDTO> tables = dynamoService.getList();
         List<BucketDTO> buckets = bucketService.getList();
 
-        ModelAndView mav = new ModelAndView("report/new");
+        ModelAndView mav = new ModelAndView("cloudwatch/reports/new");
         mav.addObject("tables", tables);
         mav.addObject("buckets", buckets);
         mav.addObject("usageMetrics", usageMetrics);
         mav.addObject("s3Metrics", s3Metrics);
         mav.addObject("dynamoMetrics", dynamoMetrics);
+        mav.addObject("services", services);
         return mav;
     }
 

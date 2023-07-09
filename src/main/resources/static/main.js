@@ -84,7 +84,7 @@ $( document ).ready(function($) {
             .fail(function(xhr, status, error) {
                 $(".alert-danger").html(xhr.responseText).show().delay(2000).fadeOut('slow');
                 clickedButton.removeClass("disabled");
-            });;
+            });
         }
     );
 
@@ -128,5 +128,40 @@ $( document ).ready(function($) {
 
             }    
         );
+
+        $("#save_report").click(
+            function(event){
+                event.preventDefault();
+
+                var data = {};
+
+                data["buckets"] = $("#bucket_list").val();
+                data["tables"]  = $("#table_list").val();
+                data["usage_metric"] = $("#usage_metric").find(":selected").val();
+                data["s3_metric"] = $("#s3_metric").find(":selected").val();
+                data["dynamo_metric"] = $("#dynamo_metric").find(":selected").val();
+                
+                console.log(data);
+
+                $.ajax({
+                    "dataType" : 'json',
+                    "url" : "/report/save",
+                    "data" : JSON.stringify(data),
+                    "type" : "PUT",
+                    "contentType": "application/json"
+                }).done(function() {
+                    document.location = "/report/list";
+                })
+                .fail(function(xhr, status, error) {
+                    $(".alert-danger").html(xhr.responseText).show().delay(2000).fadeOut('slow');
+                    clickedButton.removeClass("disabled");
+                });
+            }
+        );
+
+        $('input[type=radio][name=report_option]').change(function() {
+            $(".form-group").addClass("collapse")
+            $("." + this.value + "-related").removeClass("collapse"); 
+        });
 
 });
