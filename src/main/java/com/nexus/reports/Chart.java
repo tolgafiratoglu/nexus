@@ -3,22 +3,23 @@ import lombok.Data;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
-
-import com.nexus.reports.Report;
+import java.util.List;
 
 @Data
 @Entity
-@Table(name = "report_metrics")
-public class ReportMetric {
+@Table(name = "charts")
+public class Chart implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, insertable = false, updatable = false)
-    long id;
-
-    @ManyToOne
-    @JoinColumn(name="report_id")
-    Report report;
+    private long id;
 
     @Column(nullable = false)
-    private String metric_name;
+    private boolean deleted = true;
+
+    @Column(nullable = false)
+    private String title;
+
+    @OneToMany(mappedBy = "chart")
+    private List<ChartMeta> chartMetas;
 }
