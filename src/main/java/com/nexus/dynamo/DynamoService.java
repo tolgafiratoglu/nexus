@@ -24,6 +24,10 @@ import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.waiters.Waiter;
 import com.amazonaws.waiters.WaiterParameters;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.PutItemRequest;
+import com.amazonaws.services.dynamodbv2.model.PutItemResult;
+
 @Service
 public class DynamoService {
     
@@ -42,7 +46,7 @@ public class DynamoService {
         dynamoDB = new DynamoDB(dynamoDbClient);
     }
 
-    protected List<DynamoDTO> convertIntoDTOList(List<String> tableNames) {
+    public List<DynamoDTO> convertIntoDTOList(List<String> tableNames) {
         List<DynamoDTO> dynamoDTOList = new ArrayList<DynamoDTO>();
 
         for(String tableName : tableNames) {
@@ -54,13 +58,13 @@ public class DynamoService {
         return dynamoDTOList;
     }
 
-    protected List<DynamoDTO> getList() {
+    public List<DynamoDTO> getList() {
         ListTablesResult tables = dynamoDbClient.listTables();
         List<String> tableNames = tables.getTableNames();
         return convertIntoDTOList(tableNames);
     }
 
-    protected Table create(String tableName) {
+    public Table create(String tableName) {
         List<AttributeDefinition> attributeDefinitions= new ArrayList<AttributeDefinition>();
         attributeDefinitions.add(new AttributeDefinition().withAttributeName("Id").withAttributeType("N"));
 
@@ -83,5 +87,13 @@ public class DynamoService {
 
         // Get the newly created table
         return dynamoDB.getTable(tableName);
+    }
+
+    public PutItemResult insert(String table, String id, String key, String value){
+        PutItemRequest request = new PutItemRequest()
+            .withTableName(table)
+            .addItemEntry("Id", new AttributeValue().withN(id))
+            .addItemEntry(key, new AttributeValue(value));
+        return dynamoDbClient.putItem(request);
     }
 }

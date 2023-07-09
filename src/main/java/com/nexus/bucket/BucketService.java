@@ -2,10 +2,8 @@ package com.nexus.bucket;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -48,21 +46,21 @@ public class BucketService {
         return bucketDTOList;
     }
 
-    protected List<BucketDTO> getList() {
+    public List<BucketDTO> getList() {
         List<Bucket> buckets = s3Client.listBuckets();
         return convertIntoDTOList(buckets);
     }
 
-    protected Bucket create(String bucketName) {
+    public Bucket create(String bucketName) {
         return s3Client.createBucket(bucketName);
     }    
 
-    protected PutObjectResult upload(String bucketName, InputStream inputStream, String fileName, ObjectMetadata metadata) {
+    public PutObjectResult upload(String bucketName, InputStream inputStream, String fileName, ObjectMetadata metadata) {
         PutObjectRequest request = new PutObjectRequest(bucketName, fileName, inputStream, metadata);
         return s3Client.putObject(request);
     }
 
-    protected Boolean bucketExists(String bucketName) {
+    public Boolean bucketExists(String bucketName) {
         return s3Client.doesBucketExist(bucketName);
     }
 }

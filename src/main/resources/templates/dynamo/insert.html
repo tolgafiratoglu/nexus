@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+  <title>S3 / Insert Into Table</title>
+</head>
+<body>
+    <section layout:fragment="content">
+        <div class="alert alert-danger collapse" role="alert"></div>
+        <div class="alert alert-success collapse" role="alert"></div>
+        <form class="new-bucket-object-form">
+            <div class="form-group">
+                <label for="tableName">Table to Insert</label>
+                <select id="table_name" class="form-control">
+                    <option th:each="table : ${tables}" th:value="${table.name}" th:text="${table.name}"></option>
+                </select>
+                <small class="form-text text-muted">Please select a table.</small>
+            </div>
+            <div class="form-group">
+                <label for="item_key">ID</label>
+                <input type="text" id="item_id" class="form-control">
+                <small id="item_id_label" class="form-text text-muted">ID</small>
+            </div>
+            <div class="form-group">
+                <label for="item_key">Key</label>
+                <input type="text" id="item_key" class="form-control">
+                <small id="item_key_label" class="form-text text-muted">Key to store</small>
+            </div>
+            <div class="form-group">
+                <label for="item_value">Value</label>
+                <input type="text" id="item_value" class="form-control">
+                <small id="item_value_label" class="form-text text-muted">Related value to store</small>
+            </div>
+            <button type="submit" id="insert_key_value" class="btn btn-primary">Save Key Value Pair</button>
+        </form>
+    </section>
+</body>
+</html>

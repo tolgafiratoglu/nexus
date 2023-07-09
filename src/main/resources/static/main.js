@@ -63,6 +63,31 @@ $( document ).ready(function($) {
         }
     );
 
+    $("#insert_key_value").click(
+        function(event) {
+            event.preventDefault();
+
+            var tableName = $("#table_name").find(":selected").val();
+            var id = $("#item_id").val();
+            var itemKey = $("#item_key").val();
+            var itemValue = $("#item_value").val();
+    
+            $.ajax({
+                "dataType" : 'json',
+                "url" : "/dynamo/table/insert",
+                "data" : JSON.stringify({"table": tableName, "id": id, "key": itemKey, "value": itemValue}),
+                "type" : "PUT",
+                "contentType": "application/json"
+            }).done(function() {
+                document.location = "/dynamo/table/insert";
+            })
+            .fail(function(xhr, status, error) {
+                $(".alert-danger").html(xhr.responseText).show().delay(2000).fadeOut('slow');
+                clickedButton.removeClass("disabled");
+            });;
+        }
+    );
+
     var files = [];
 
     $(document)

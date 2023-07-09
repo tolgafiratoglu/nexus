@@ -15,12 +15,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class DynamoController {
 
     @Autowired
-    DynamoService bucketService; 
+    DynamoService dynamoService; 
 
     @GetMapping("/list")
     public ModelAndView list() {
        
-        List<DynamoDTO> tables = bucketService.getList();
+        List<DynamoDTO> tables = dynamoService.getList();
 
         ModelAndView mav = new ModelAndView("dynamo/list");
         mav.addObject("tables", tables);
@@ -28,16 +28,16 @@ public class DynamoController {
     }
     
     @GetMapping("/new")
-    public ModelAndView newBucket() {
+    public ModelAndView newTable() {
         ModelAndView mav = new ModelAndView("dynamo/new");
         return mav;
     }
 
-    @GetMapping("/object")
-    public ModelAndView bucketObject() {
-        List<DynamoDTO> buckets = bucketService.getList();
-        ModelAndView mav = new ModelAndView("bucket/object");
-        mav.addObject("buckets", buckets);
+    @GetMapping("/table/insert")
+    public ModelAndView newKeyValue() {
+        List<DynamoDTO> tables = dynamoService.getList();
+        ModelAndView mav = new ModelAndView("dynamo/insert");
+        mav.addObject("tables", tables);
         return mav;
     }
 

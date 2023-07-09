@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+
+
 import javax.validation.Valid;
 
 @RestController
@@ -33,6 +35,16 @@ public class DynamoRestController {
             return ResponseEntity.ok().body("Bucket was created");
         } catch (Exception exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, dynamoRequest.getName() + exception.getMessage(), exception);
+        }    
+    }
+
+    @PutMapping("/table/insert")
+    public ResponseEntity insert(@Valid @RequestBody DynamoInsertRequest dynamoInsertRequest) {
+        try {
+            dynamoService.insert(dynamoInsertRequest.getTable(), dynamoInsertRequest.getId(), dynamoInsertRequest.getKey(), dynamoInsertRequest.getValue());    
+            return ResponseEntity.ok().body("Value inserted to table.");
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage(), exception);
         }    
     }
 }
