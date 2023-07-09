@@ -134,7 +134,7 @@ $( document ).ready(function($) {
                 event.preventDefault();
 
                 var data = {};
-
+                data["title"] = $("#report_title").val();
                 data["buckets"] = $("#bucket_list").val();
                 data["tables"]  = $("#table_list").val();
                 data["usage_metric"] = $("#usage_metric").find(":selected").val();
@@ -160,7 +160,7 @@ $( document ).ready(function($) {
         );
 
         $('input[type=radio][name=report_option]').change(function() {
-            $(".form-group").addClass("collapse")
+            $(".form-element").addClass("collapse")
             $("." + this.value + "-related").removeClass("collapse"); 
         });
 
