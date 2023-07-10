@@ -134,23 +134,24 @@ $( document ).ready(function($) {
                 event.preventDefault();
 
                 var data = {};
+                data["reportType"] = $('input[type=radio][name=report_option]:checked').val();
                 data["title"] = $("#report_title").val();
                 data["buckets"] = $("#bucket_list").val();
                 data["tables"]  = $("#table_list").val();
-                data["usage_metric"] = $("#usage_metric").find(":selected").val();
-                data["s3_metric"] = $("#s3_metric").find(":selected").val();
-                data["dynamo_metric"] = $("#dynamo_metric").find(":selected").val();
+                data["service"]  = $("#services").val();
+                data["usageMetric"] = $("#usage_metric").find(":selected").val();
+                data["s3Metric"] = $("#s3_metric").find(":selected").val();
+                data["dynamoMetric"] = $("#dynamo_metric").find(":selected").val();
                 
                 console.log(data);
 
                 $.ajax({
-                    "dataType" : 'json',
                     "url" : "/report/save",
                     "data" : JSON.stringify(data),
                     "type" : "PUT",
                     "contentType": "application/json"
                 }).done(function() {
-                    document.location = "/report/list";
+                    // document.location = "/report/list";
                 })
                 .fail(function(xhr, status, error) {
                     $(".alert-danger").html(xhr.responseText).show().delay(2000).fadeOut('slow');

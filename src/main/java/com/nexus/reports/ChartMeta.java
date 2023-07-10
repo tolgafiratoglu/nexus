@@ -18,8 +18,8 @@ public class ChartMeta implements Serializable {
     private Chart chart;
 
     @Column(nullable = false)
-    private String meta_key;
+    private String metaKey;
 
     @Column(length = 65535,columnDefinition="Text")
-    private String meta_value;
+    private String metaValue;
 }
