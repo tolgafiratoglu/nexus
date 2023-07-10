@@ -6,8 +6,24 @@
 <body>
     <section layout:fragment="content">
       <div th:each="chart : ${charts}">
-          <h4 th:text="${chart.getTitle()}"></h4>
-          
+          <h4 th:text="${chart.getChart().getTitle()}"></h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <td>Resource</td>
+                <td>Average</td>
+                <td>Minimum</td>
+                <td>Maximum</td>
+                <td>Sum</td>
+              </tr>
+            </thead>  
+            <tbody>
+              <tr th:each="entry : ${chart.getData()}">
+                <td th:text="${entry.key}"></td>
+                <td th:each="stat : ${entry.value}" th:text="stat.value"></td>
+              </tr>
+            </tbody>  
+          </table>
       </div>
     </section>
 </body>

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nexus.reports.Chart;
+import com.nexus.reports.ChartData;
 import com.nexus.reports.ChartService;
 
 import java.util.List;
@@ -18,9 +19,9 @@ public class DashboardController {
     ChartService chartService;
 
     @GetMapping("/")
-    public ModelAndView listCharts() {
+    public ModelAndView dashboard() {
        
-        List<Chart> charts = chartService.getActiveCharts();
+        List<ChartData> charts = chartService.getChartData();
 
         ModelAndView mav = new ModelAndView("dashboard/charts");
         mav.addObject("charts", charts);

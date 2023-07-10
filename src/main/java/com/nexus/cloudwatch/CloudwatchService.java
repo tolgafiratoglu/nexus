@@ -4,7 +4,6 @@ import com.amazonaws.services.cloudwatch.AmazonCloudWatch;
 import com.amazonaws.services.cloudwatch.AmazonCloudWatchClientBuilder;
 import com.amazonaws.services.cloudwatch.model.ListMetricsRequest;
 import com.amazonaws.services.cloudwatch.model.Metric;
-import com.amazonaws.services.cloudwatch.model.Statistic;
 import com.amazonaws.services.cloudwatch.model.Datapoint;
 import com.amazonaws.services.cloudwatch.model.Dimension;
 import com.amazonaws.services.cloudwatch.model.GetMetricStatisticsRequest;
@@ -15,9 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
-
-import com.nexus.cloudwatch.MetricDTO;
+import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
@@ -51,13 +50,31 @@ public class CloudwatchService {
         return convertMetricsIntoArrayList(cloudWatchClient.listMetrics(request).getMetrics());
     }
 
-    protected Map<String, Double> getS3Stats(String bucketName, String metric)
+    public Map<String, Double> getStats(String namespace, String itemName, String metric)
     {
         Map<String, Double> map = new HashMap<String, Double>();
 
+        Calendar calendar = Calendar.getInstance();
+        Date endDate = calendar.getTime();
+
+        calendar.add(Calendar.MONTH, -1); 
+        Date startDate = calendar.getTime();
+
         Dimension dimension = new Dimension();
+            
+        if(namespace.equals("s3")){
             dimension.setName("BucketName");
-            dimension.setValue(bucketName);
+        }
+
+        if(namespace.equals("dynamodb")){
+            dimension.setName("TableName");
+        }
+
+        if(namespace.equals("usage")){
+            dimension.setName("Service");
+        }
+
+        dimension.setValue(itemName);
 
         GetMetricStatisticsRequest request = new GetMetricStatisticsRequest();
             request.setNamespace("AWS/S3");
@@ -65,6 +82,8 @@ public class CloudwatchService {
             request.setDimensions(Arrays.asList(dimension)); 
             request.setStatistics(Arrays.asList("Average", "Sum", "Minimum", "Maximum"));
             request.setPeriod(3600);
+            request.setStartTime(startDate);
+            request.setEndTime(endDate);
 
         GetMetricStatisticsResult response = cloudWatchClient.getMetricStatistics(request);
     
