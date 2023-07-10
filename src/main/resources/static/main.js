@@ -149,7 +149,7 @@ $( document ).ready(function($) {
                     "type" : "PUT",
                     "contentType": "application/json"
                 }).done(function() {
-                    // document.location = "/report/list";
+                    document.location = "/report/list";
                 })
                 .fail(function(xhr, status, error) {
                     $(".alert-danger").html(xhr.responseText).show();
