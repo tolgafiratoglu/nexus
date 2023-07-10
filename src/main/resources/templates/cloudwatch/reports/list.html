@@ -8,12 +8,12 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">List Name</th>
+            <th scope="col">Report Name</th>
           </tr>
         </thead>
         <tbody>
-          <tr th:each="report : ${reports}">
-            <td><span th:text="${report.title}"></span></td>
+          <tr th:each="chart : ${charts}">
+            <td><span th:text="${chart.title}"></span></td>
           </tr>
         </tbody>
       </table>

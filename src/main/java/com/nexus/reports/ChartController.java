@@ -28,6 +28,9 @@ public class ChartController {
     @Autowired
     BucketService bucketService;
 
+    @Autowired
+    ChartService chartService;
+
     List<String> usageMetrics = Arrays.asList("CallCount", "ResourceCount");
     List<String> s3Metrics = Arrays.asList("NumberOfObjects", "BucketSizeBytes");
     List<String> dynamoMetrics = Arrays.asList("ConsumedReadCapacityUnits", "ConsumedWriteCapacityUnits", "ProvisionedReadCapacityUnits", "AccountMaxTableLevelWrites", "AccountMaxWrites", "AccountProvisionedReadCapacityUtilization");
@@ -46,6 +49,16 @@ public class ChartController {
         mav.addObject("s3Metrics", s3Metrics);
         mav.addObject("dynamoMetrics", dynamoMetrics);
         mav.addObject("services", services);
+        return mav;
+    }
+
+    @GetMapping("/list")
+    public ModelAndView list() {
+       
+        List<Chart> charts = chartService.getActiveCharts();
+
+        ModelAndView mav = new ModelAndView("cloudwatch/reports/list");
+        mav.addObject("charts", charts);
         return mav;
     }
 }

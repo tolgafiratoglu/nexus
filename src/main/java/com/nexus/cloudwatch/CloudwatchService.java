@@ -57,7 +57,7 @@ public class CloudwatchService {
         Calendar calendar = Calendar.getInstance();
         Date endDate = calendar.getTime();
 
-        calendar.add(Calendar.MONTH, -1); 
+        calendar.add(Calendar.MONTH, -30); 
         Date startDate = calendar.getTime();
 
         Dimension dimension = new Dimension();
@@ -81,7 +81,7 @@ public class CloudwatchService {
             request.setMetricName(metric);
             request.setDimensions(Arrays.asList(dimension)); 
             request.setStatistics(Arrays.asList("Average", "Sum", "Minimum", "Maximum"));
-            request.setPeriod(3600);
+            request.setPeriod(3600*24);
             request.setStartTime(startDate);
             request.setEndTime(endDate);
 

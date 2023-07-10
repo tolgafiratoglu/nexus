@@ -15,7 +15,7 @@ public class BucketTests {
     private TestRestTemplate restTemplate = new TestRestTemplate();
 
     @Test
-    public void testMyPathEndpoint() {
+    public void testBucketListEndpoint() {
         String url = "http://localhost:8080/bucket/list";
 
         ResponseEntity<Void> response = restTemplate.getForEntity(url, Void.class);
