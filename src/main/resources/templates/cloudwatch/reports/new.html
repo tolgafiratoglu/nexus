@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
 <head>
-  <title>S3 / New Report</title>
+  <title>Create Report</title>
 </head>
 <body>
     <section layout:fragment="content">
@@ -39,7 +39,7 @@
             </div>
             <div class="form-group form-element usage-related">
                 <label for="services">Services</label>
-                <select id="services" class="form-control">
+                <select id="services" class="form-control" multiple>
                     <option th:each="serviceName : ${services}" th:value="${serviceName}" th:text="${serviceName}"></option>
                 </select>
                 <small class="form-text text-muted">Please select the service</small>

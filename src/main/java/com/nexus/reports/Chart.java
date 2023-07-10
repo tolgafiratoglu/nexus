@@ -3,7 +3,6 @@ import lombok.Data;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 @Entity
@@ -20,6 +19,12 @@ public class Chart implements Serializable {
     @Column(nullable = false)
     private String title;
 
-    @OneToMany(mappedBy = "chart")
-    private List<ChartMeta> chartMetas;
+    @Column(nullable = false)
+    private String metric;
+
+    @Column(nullable = false)
+    private String namespace; // s3, dynamodb, cloudwatch ...
+
+    @Column(length = 65535,columnDefinition="Text")
+    private String items;
 }

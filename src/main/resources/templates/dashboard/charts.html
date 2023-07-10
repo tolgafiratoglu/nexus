@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+  <title>Dashboard</title>
+</head>
+<body>
+    <section layout:fragment="content">
+      <div th:each="chart : ${charts}">
+          <h4 th:text="${chart.getTitle()}"></h4>
+          
+      </div>
+    </section>
+</body>
+</html>

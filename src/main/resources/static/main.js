@@ -138,12 +138,10 @@ $( document ).ready(function($) {
                 data["title"] = $("#report_title").val();
                 data["buckets"] = $("#bucket_list").val();
                 data["tables"]  = $("#table_list").val();
-                data["service"]  = $("#services").val();
+                data["services"]  = $("#services").val();
                 data["usageMetric"] = $("#usage_metric").find(":selected").val();
                 data["s3Metric"] = $("#s3_metric").find(":selected").val();
                 data["dynamoMetric"] = $("#dynamo_metric").find(":selected").val();
-                
-                console.log(data);
 
                 $.ajax({
                     "url" : "/report/save",
@@ -154,7 +152,7 @@ $( document ).ready(function($) {
                     // document.location = "/report/list";
                 })
                 .fail(function(xhr, status, error) {
-                    $(".alert-danger").html(xhr.responseText).show().delay(2000).fadeOut('slow');
+                    $(".alert-danger").html(xhr.responseText).show();
                     clickedButton.removeClass("disabled");
                 });
             }
